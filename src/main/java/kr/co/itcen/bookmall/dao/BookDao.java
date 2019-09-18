@@ -36,8 +36,8 @@ public class BookDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select book.no, title, price, category_no from book, category " 
-					+ "	where book.no = category.no" 
+			String sql = "select book.no, title, price, category.name from book, category " 
+					+ "	where book.category_no = category.no" 
 					+ "	order by book.no asc";
 			pstmt = connection.prepareStatement(sql);
 			
@@ -47,12 +47,17 @@ public class BookDao {
 				Long no = rs.getLong(1);
 				String title = rs.getString(2);
 				Long price = rs.getLong(3);
-				String category_no = rs.getString(4);
+				String category_name = rs.getString(4);
 				
-				result.add(no);
-				result.add(title);
-				result.add(price);
-				result.add(category_no);
+				ArrayList booklist = new ArrayList();
+				booklist.add(no);
+				booklist.add(title);
+				booklist.add(price);
+				booklist.add(category_name);
+				
+				result.add(booklist);
+				
+				
 				
 			}
 		} catch (SQLException e) {

@@ -9,12 +9,12 @@ public class CartDaoTest {
 		public static void main(String[] args) {
 			insertTest();
 			selectTest();
-			deleteAllTest();
+//			deleteAllTest();
 		}
 		
-		private static void deleteAllTest(){
-			new CartDao().delete();
-		}
+//		private static void deleteAllTest(){
+//			new CartDao().delete();
+//		}
 		
 		private static void insertTest() {
 			System.out.println("insert test-----------------------");

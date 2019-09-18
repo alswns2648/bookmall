@@ -38,29 +38,28 @@ public class UserDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select * from user order by no asc";
+			String sql = "select name, email, phone_num "
+					+ "from user "
+					+ "order by user.no asc";
+			
 			pstmt = connection.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				Long no = rs.getLong(1);
-				String name = rs.getString(2);
-				String email = rs.getString(3);
-				String phone_num = rs.getString(4);
-				String passwd = rs.getString(5);
+				String name = rs.getString(1);
+				String email = rs.getString(2);
+				String phone_num = rs.getString(3);
 				
 				UserVo vo= new UserVo();
-				vo.setNo(no);
 				vo.setName(name);
 				vo.setEmail(email);
 				vo.setPhone_num(phone_num);
-				vo.setPasswd(passwd);
 				
 				result.add(vo);
 			}
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			e.printStackTrace();
 		} finally {
 			try {
 				if(rs != null) {
@@ -95,6 +94,7 @@ public class UserDao {
 			pstmt.setString(2, vo1.getEmail());
 			pstmt.setString(3, vo1.getPhone_num());
 			pstmt.setString(4, vo1.getPasswd());
+			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
 			
@@ -107,7 +107,7 @@ public class UserDao {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			e.printStackTrace();
 		} finally {
 			try {
 				if(rs != null) {

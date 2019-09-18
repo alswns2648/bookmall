@@ -29,8 +29,8 @@ public class CartDao {
 		return connection;
 	}
 	
-	public List<CartVo> getList() {
-		List<CartVo> result = new ArrayList<CartVo>();
+	public ArrayList getList() {
+		ArrayList result = new ArrayList();
 		
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -39,24 +39,26 @@ public class CartDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select * from cart order by no asc";
+			String sql = "select user.name, book.title, cart_count "
+					+ "from cart, book, user "
+					+ "where book.no = book_no and user.no = user_no"
+					+ "order by cart.no asc";
 			pstmt = connection.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				Long no = rs.getLong(1);
-				Long book_no = rs.getLong(2);
-				Long user_no = rs.getLong(3);
-				Long cart_count = rs.getLong(4);
+				String name = rs.getString(1);
+				String title = rs.getString(2);
+				Long cart_count = rs.getLong(3);
 				
-				CartVo vo= new CartVo();
-				vo.setNo(no);
-				vo.setBook_no(book_no);
-				vo.setUser_no(user_no);
-				vo.setCart_count(cart_count);
+				ArrayList temp = new ArrayList();
+
+				temp.add("name = " + name);
+				temp.add("title = " + title);
+				temp.add("cart_count = " + cart_count);
 				
-				result.add(vo);
+				result.add(temp);
 			}
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
@@ -93,6 +95,7 @@ public class CartDao {
 			pstmt.setLong(1, vo1.getBook_no());
 			pstmt.setLong(2, vo1.getUser_no());
 			pstmt.setLong(3, vo1.getCart_count());
+			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
 			
@@ -105,7 +108,7 @@ public class CartDao {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			e.printStackTrace();
 		} finally {
 			try {
 				if(rs != null) {

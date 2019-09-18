@@ -38,7 +38,8 @@ public class OrdersDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select orders.no, user_no, price, deli_address from orders, user "
+			String sql = "select orders.no, user.name, price, deli_address "
+					+ "from orders, user "
 					+ "	where user.no = orders.user_no"
 					+ "	order by orders.no asc";
 			pstmt = connection.prepareStatement(sql);
@@ -51,13 +52,16 @@ public class OrdersDao {
 				Long price = rs.getLong(3);
 				String deli_address = rs.getString(4);
 							
-				result.add(no);
-				result.add(user_no);
-				result.add(price);
-				result.add(deli_address);
+				ArrayList temp = new ArrayList();
+				temp.add("no = " + no);
+				temp.add("user_no = " + user_no);
+				temp.add("price = "+ price);
+				temp.add("delivery address = " + deli_address);
+
+				result.add(temp);
 			}
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			e.printStackTrace();
 		} finally {
 			try {
 				if(rs != null) {
@@ -103,7 +107,7 @@ public class OrdersDao {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			e.printStackTrace();
 		} finally {
 			try {
 				if(rs != null) {

@@ -38,7 +38,7 @@ public class CategoryDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select * from category order by no asc";
+			String sql = "select category.no, category_name from category order by category.no asc";
 			pstmt = connection.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
@@ -54,7 +54,7 @@ public class CategoryDao {
 				result.add(vo);
 			}
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			e.printStackTrace();
 		} finally {
 			try {
 				if(rs != null) {
@@ -97,7 +97,7 @@ public class CategoryDao {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			e.printStackTrace();
 		} finally {
 			try {
 				if(rs != null) {
