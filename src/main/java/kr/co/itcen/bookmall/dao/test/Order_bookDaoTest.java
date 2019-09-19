@@ -24,9 +24,9 @@ public class Order_bookDaoTest {
 		Order_BookDao dao = new Order_BookDao();
 
 		Order_BookVo vo1 = new Order_BookVo();
-		vo1.setBook_no((long)14);
-		vo1.setOrder_no((long)10);
-		vo1.setCount((long)414);
+		vo1.setBook_no((long)1);
+		vo1.setOrder_no((long)1);
+		vo1.setCount((long)10);
 		dao.insert(vo1);
 		System.out.println(vo1);
 	}

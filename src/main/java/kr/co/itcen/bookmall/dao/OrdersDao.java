@@ -48,13 +48,13 @@ public class OrdersDao {
 			
 			while(rs.next()){
 				Long no = rs.getLong(1);
-				Long user_no = rs.getLong(2);
+				String user_name = rs.getString(2);
 				Long price = rs.getLong(3);
 				String deli_address = rs.getString(4);
 							
 				ArrayList temp = new ArrayList();
 				temp.add("no = " + no);
-				temp.add("user_no = " + user_no);
+				temp.add("user_name = " + user_name);
 				temp.add("price = "+ price);
 				temp.add("delivery address = " + deli_address);
 

@@ -12,11 +12,11 @@ import kr.co.itcen.bookmall.vo.Order_BookVo;
 public class Order_BookDao {
 	
 	public Boolean insert(Order_BookVo vo1) {
+		Boolean result = false;
 		Connection connection =null;
 		PreparedStatement pstmt = null;
-		Statement stmt =null;
 		ResultSet rs =null;
-		Boolean result = false;
+		
 
 		try {
 			connection = getConnection();
@@ -24,20 +24,13 @@ public class Order_BookDao {
 			pstmt = connection.prepareStatement(sql);
 
 			pstmt.setLong(1, vo1.getBook_no());
-			pstmt.setLong(3, vo1.getOrder_no());
+			pstmt.setLong(2, vo1.getOrder_no());
 			pstmt.setLong(3, vo1.getCount());
-
 
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
+			
 
-			stmt = connection.createStatement();
-			rs = stmt.executeQuery("select last_insert_id()");
-			if(rs.next()) {
-				Long no = rs.getLong(1);
-				vo1.setNo(no);
-
-			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -46,9 +39,6 @@ public class Order_BookDao {
 			try {
 				if(rs!=null) {
 					rs.close();
-				}
-				if(stmt!=null) {
-					stmt.close();
 				}
 				if(pstmt!=null) {
 					pstmt.close();
@@ -73,9 +63,10 @@ public class Order_BookDao {
 		try {
 			connection = getConnection();
 
-			String sql = "select order_book.book_no, book.title, order_book.count"
-					+ " from order_book, book "
-					+ " where order_book.book_no = book.no and book.no = order_book.book_no  "
+			String sql = "select order_book.no, book.no, book.title, order_book.count"
+					+ " from order_book, book, orders"
+					+ " where order_book.order_no = orders.no"
+					+ " and book.no = order_book.book_no"
 					+ " order by order_book.no asc ";
 			
 			pstmt = connection.prepareStatement(sql);
@@ -83,14 +74,16 @@ public class Order_BookDao {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Long book_no = rs.getLong(1);
-				String book_title=rs.getString(2);
-				Long count=rs.getLong(3);
+				Long order_no = rs.getLong(1);
+				Long book_no = rs.getLong(2);
+				String title = rs.getString(3);
+				Long count = rs.getLong(4);
 
 				ArrayList temp = new ArrayList();
-				temp.add("orderbook_no = " + book_no);
-				temp.add("orderbook_title = " + book_title);
-				temp.add("orderbook_count = " + count);
+				temp.add("order_no : " + order_no);
+				temp.add("book_no = " + book_no);
+				temp.add("title = " + title);
+				temp.add("count = " + count);
 
 				result.add(temp);
 			}

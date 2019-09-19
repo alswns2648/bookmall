@@ -5,7 +5,7 @@ public class BookVo {
 	private String title;
 	private Long price;
 	private Long category_no;
-	
+
 	public Long getNo() {
 		return no;
 	}
@@ -28,7 +28,7 @@ public class BookVo {
 		return category_no;
 	}
 	public void setCategory_no(Long category_no) {
-		this.category_no = no;
+		this.category_no = category_no;
 	}
 	@Override
 	public String toString() {

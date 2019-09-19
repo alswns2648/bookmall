@@ -1,3 +1,4 @@
+
 package kr.co.itcen.bookmall.dao.test;
 
 import java.util.ArrayList;
@@ -24,21 +25,21 @@ public class BookDaoTest {
 			BookVo bookvo = new BookVo();
 			bookvo.setTitle("어린왕자");
 			bookvo.setPrice((long)40000);
-			bookvo.setCategory_no((long)13);
+			bookvo.setCategory_no((long)4);
 			dao.insert(bookvo);
 			System.out.println(bookvo);
 			
 			BookVo bookvo2 = new BookVo();
 			bookvo2.setTitle("개미");
 			bookvo2.setPrice((long)40000);
-			bookvo2.setCategory_no((long)14);
+			bookvo2.setCategory_no((long)5);
 			dao.insert(bookvo2);
 			System.out.println(bookvo2);
 			
 			BookVo bookvo3 = new BookVo();
 			bookvo3.setTitle("책");
 			bookvo3.setPrice((long)40000);
-			bookvo3.setCategory_no((long)15);
+			bookvo3.setCategory_no((long)6);
 			dao.insert(bookvo3);
 			System.out.println(bookvo3);
 		}

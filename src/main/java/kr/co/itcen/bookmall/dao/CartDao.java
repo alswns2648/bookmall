@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 import kr.co.itcen.bookmall.vo.CartVo;
 
@@ -39,29 +38,30 @@ public class CartDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select user.name, book.title, cart_count "
+			String sql = "select user.name, book.title, cart.cart_count "
 					+ "from cart, book, user "
-					+ "where book.no = book_no and user.no = user_no"
+					+ "where book.no = cart.book_no and user.no = cart.user_no "
 					+ "order by cart.no asc";
+			
 			pstmt = connection.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				String name = rs.getString(1);
-				String title = rs.getString(2);
+				String user_name = rs.getString(1);
+				String book_title = rs.getString(2);
 				Long cart_count = rs.getLong(3);
 				
 				ArrayList temp = new ArrayList();
 
-				temp.add("name = " + name);
-				temp.add("title = " + title);
+				temp.add("name = " + user_name);
+				temp.add("title = " + book_title);
 				temp.add("cart_count = " + cart_count);
 				
 				result.add(temp);
 			}
 		} catch (SQLException e) {
-			System.out.println("error:" + e);
+			e.printStackTrace();
 		} finally {
 			try {
 				if(rs != null) {
@@ -85,8 +85,6 @@ public class CartDao {
 		Boolean result = false;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
-		Statement stmt = null;
-		ResultSet rs = null;
 		try {
 			connection = getConnection();
 			
@@ -100,23 +98,10 @@ public class CartDao {
 			result = (count == 1);
 			
 			
-			stmt = connection.createStatement();
-			rs = stmt.executeQuery("select last_insert_id()");
-			if(rs.next()) {
-				Long no = rs.getLong(1);
-				vo1.setNo(no);
-			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(rs != null) {
-					rs.close();
-				}
-				if(stmt != null) {
-					stmt.close();
-				}
 				
 				if(pstmt != null) {
 					pstmt.close();

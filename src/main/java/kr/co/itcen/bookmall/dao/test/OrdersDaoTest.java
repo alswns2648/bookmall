@@ -22,9 +22,9 @@ public class OrdersDaoTest {
 		OrdersDao dao = new OrdersDao();
 		
 		OrdersVo vo1 = new OrdersVo();
-		vo1.setUser_no((long)14);
-		vo1.setPrice((long)400);
-		vo1.setDeli_address("새주소지");
+		vo1.setUser_no((long)5);
+		vo1.setPrice((long)40000);
+		vo1.setDeli_address("둘리집");
 		dao.insert(vo1);
 		System.out.println(vo1);
 	}

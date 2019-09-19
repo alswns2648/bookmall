@@ -1,7 +1,6 @@
 package kr.co.itcen.bookmall.dao.test;
 
-import java.util.List;
-
+import java.util.ArrayList;
 import kr.co.itcen.bookmall.dao.CartDao;
 import kr.co.itcen.bookmall.vo.CartVo;
 
@@ -22,15 +21,17 @@ public class CartDaoTest {
 			CartDao dao = new CartDao();
 			
 			CartVo vo1 = new CartVo();
-			vo1.setBook_no((long)30);
-			vo1.setUser_no((long)14);
-			vo1.setCart_count((long)50);
+			vo1.setBook_no((long)1);
+			vo1.setUser_no((long)5);
+			vo1.setCart_count((long)3);
+			dao.insert(vo1);
 			System.out.println(vo1);
 			
 			CartVo vo2 = new CartVo();
-			vo2.setBook_no((long)50);
-			vo2.setUser_no((long)15);
-			vo2.setCart_count((long)50);
+			vo2.setBook_no((long)2);
+			vo2.setUser_no((long)6);
+			vo2.setCart_count((long)4);
+			dao.insert(vo2);
 			System.out.println(vo2);
 		}
 		
@@ -39,9 +40,9 @@ public class CartDaoTest {
 
 			CartDao dao = new CartDao();
 
-			List<CartVo> list = dao.getList();
-			for(CartVo vo:list) {
-				System.out.println(vo);
+			ArrayList list = dao.getList();
+			for(int i=0;i<list.size();i++) {
+				System.out.println(list.get(i));
 			}
 		}
 

@@ -5,6 +5,7 @@ public class CartVo {
 	private Long book_no;
 	private Long user_no;
 	private Long cart_count;
+	
 	public Long getNo() {
 		return no;
 	}

@@ -36,9 +36,10 @@ public class BookDao {
 		try {
 			connection = getConnection();
 			
-			String sql = "select book.no, title, price, category.name from book, category " 
-					+ "	where book.category_no = category.no" 
-					+ "	order by book.no asc";
+			String sql = "select book.no, book.title, book.price, category.category_name "
+					+ "from book, category " 
+					+ "where book.category_no = category.no " 
+					+ "order by book.no asc";
 			pstmt = connection.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
@@ -50,10 +51,10 @@ public class BookDao {
 				String category_name = rs.getString(4);
 				
 				ArrayList booklist = new ArrayList();
-				booklist.add(no);
-				booklist.add(title);
-				booklist.add(price);
-				booklist.add(category_name);
+				booklist.add("no : " + no);
+				booklist.add("title : " + title);
+				booklist.add("price : " + price);
+				booklist.add("category_name : " + category_name);
 				
 				result.add(booklist);
 				
@@ -85,8 +86,6 @@ public class BookDao {
 		Boolean result = false;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
-		Statement stmt = null;
-		ResultSet rs = null;
 		try {
 			connection = getConnection();
 			
@@ -98,23 +97,11 @@ public class BookDao {
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
 			
-			stmt = connection.createStatement();
-			rs = stmt.executeQuery("select last_insert_id()");
-			if(rs.next()) {
-				Long no = rs.getLong(1);
-				bookvo.setNo(no);
-			}
 			
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} finally {
 			try {
-				if(rs != null) {
-					rs.close();
-				}
-				if(stmt != null) {
-					stmt.close();
-				}
 				
 				if(pstmt != null) {
 					pstmt.close();
